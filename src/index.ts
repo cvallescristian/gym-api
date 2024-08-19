@@ -1,18 +1,20 @@
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `npm run dev` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `npm run deploy` to publish your worker
- *
- * Bind resources to your worker in `wrangler.toml`. After adding bindings, a type definition for the
- * `Env` object can be regenerated with `npm run cf-typegen`.
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
+import { drizzle } from 'drizzle-orm/postgres-js';
+import { Hono } from 'hono';
+import postgres from 'postgres';
+import { exercises } from './db/schema';
 
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
-	},
-} satisfies ExportedHandler<Env>;
+export type Env = {
+	DATABASE_URL: string;
+};
+
+const app = new Hono<{ Bindings: Env }>();
+
+
+app.get('/', async (c) => {
+	const queryClient = postgres(c.env.DATABASE_URL!);
+	const db = drizzle(queryClient);
+	const AllExercises = await db.select().from(exercises);
+	return c.json(AllExercises);
+});
+
+export default app;

@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { saveImage } from './services/cloudinary/utils';
-import exerciseApp from './api/exercises/exercises.api';
+import exerciseApp from './services/api/exercises/exercises.api';
+import trainingApp from './services/api/trainings/trainings.api';
 
 export type Env = {
 	DATABASE_URL: string;
@@ -11,8 +12,11 @@ export type Env = {
 
 const api = new Hono<{ Bindings: Env }>();
 
+// Routes
 api.route("/api/exercises", exerciseApp);
+api.route("/api/trainings", trainingApp);
 
+// General routes
 api.get('/', async (c) => {
 	return c.json({ message: 'Hello, this is the GYM Api' });
 });

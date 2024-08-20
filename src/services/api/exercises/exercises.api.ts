@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
-import { saveImage } from '../../services/cloudinary/utils';
-import getListExercises from '../../services/drizzle/exercises/list';
-import { NewExercise } from '../../db/schema';
-import createExercise from '../../services/drizzle/exercises/create';
+import { saveImage } from '../../../services/cloudinary/utils';
+import getListExercises from '../../../services/drizzle/exercises/list';
+import { NewExercise } from '../../../db/schema';
+import createExercise from '../../../services/drizzle/exercises/create';
 
 export type Env = {
 	DATABASE_URL: string;

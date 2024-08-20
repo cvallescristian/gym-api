@@ -16,3 +16,5 @@ export const trainings = pgTable('trainings', {
 	date: date('date'),
 	exerciseId: integer('exercise_id').notNull().references(() => exercises.id),
 });
+
+export type NewTraining = typeof trainings.$inferInsert;

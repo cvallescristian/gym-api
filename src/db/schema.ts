@@ -6,3 +6,5 @@ export const exercises = pgTable('exercises', {
 	image: text('image'),
 	description: text('description')
 });
+
+export type NewExercise = typeof exercises.$inferInsert;

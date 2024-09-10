@@ -11,6 +11,7 @@ export const saveImage = async (file: File, env: Env) => {
 	formData.append('upload_preset', 'exercise');
 	formData.append('api_key', env_variables.api_key);
 	formData.append('file', file);
+	formData.append('folder', `${env_variables.folder_name}/exercises`);
 
 	const requestOptions = {
 		method: 'POST',

@@ -8,6 +8,7 @@ export type Env = {
 	CLOUDINARY_API_KEY: string;
 	CLOUDINARY_API_SECRET: string;
 	CLOUDINARY_CLOUD_NAME: string;
+	CLOUDINARY_FOLDER_NAME: string;
 };
 
 const trainingApp = new Hono<{ Bindings: Env }>();
@@ -18,17 +19,18 @@ trainingApp.get('/', async (c) => {
 });
 
 trainingApp.post('/create', async (c) => {
-	const {exerciseId, series, repetitions, date} = await c.req.json();
-  const newTraining: NewTraining = {
-    exerciseId,
-    series,
-    repetitions,
-    date
-  }
-  const training = await createTraining(c.env, newTraining)
+	const { exerciseId, series, repetitions, date, weight } = await c.req.json();
 
-  return c.json(training);
-	
+	const newTraining: NewTraining = {
+		exerciseId,
+		series,
+		repetitions,
+		date,
+		weight,
+	};
+	const training = await createTraining(c.env, newTraining);
+
+	return c.json(training);
 });
 
 export default trainingApp;

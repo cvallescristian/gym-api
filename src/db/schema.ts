@@ -4,7 +4,7 @@ export const exercises = pgTable('exercises', {
 	id: serial('id').primaryKey(),
 	name: text('name'),
 	image: text('image'),
-	description: text('description')
+	description: text('description'),
 });
 
 export type NewExercise = typeof exercises.$inferInsert;
@@ -14,7 +14,10 @@ export const trainings = pgTable('trainings', {
 	series: integer('series'),
 	repetitions: integer('repetitions'),
 	date: date('date'),
-	exerciseId: integer('exercise_id').notNull().references(() => exercises.id),
+	weight: integer('weight'),
+	exerciseId: integer('exercise_id')
+		.notNull()
+		.references(() => exercises.id),
 });
 
 export type NewTraining = typeof trainings.$inferInsert;

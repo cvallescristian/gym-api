@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1724066820615,
-      "tag": "0000_silky_the_enforcers",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1724126855410,
-      "tag": "0001_good_black_tarantula",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1724130451972,
-      "tag": "0002_quiet_dragon_man",
+      "when": 1724796367837,
+      "tag": "0000_hard_morg",
       "breakpoints": true
     }
   ]

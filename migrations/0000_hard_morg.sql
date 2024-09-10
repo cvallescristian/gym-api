@@ -1,8 +1,16 @@
+CREATE TABLE IF NOT EXISTS "exercises" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"name" text,
+	"image" text,
+	"description" text
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "trainings" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"series" integer,
 	"repetitions" integer,
 	"date" date,
+	"weight" integer,
 	"exercise_id" integer NOT NULL
 );
 --> statement-breakpoint

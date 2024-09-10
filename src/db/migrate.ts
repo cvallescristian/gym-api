@@ -7,14 +7,15 @@ import { resolve } from 'node:path';
 import postgres from 'postgres';
 
 config({
-  path: '.dev.vars'
-})
+	path: '.dev.vars',
+});
 
-const migrationClient = postgres(process.env.DATABASE_URL!, { max: 1});
+const migrationClient = postgres(process.env.DATABASE_URL!, { max: 1 });
+console.log({ database: process.env.DATABASE_URL! });
 
 const main = async () => {
 	try {
-    await migrate(drizzle(migrationClient), { migrationsFolder: resolve(__dirname, '../../migrations')})
+		await migrate(drizzle(migrationClient), { migrationsFolder: resolve(__dirname, '../../migrations') });
 		await migrationClient.end();
 		console.log('Migration done!');
 	} catch (error) {

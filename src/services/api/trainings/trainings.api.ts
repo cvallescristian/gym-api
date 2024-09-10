@@ -2,14 +2,8 @@ import { Hono } from 'hono';
 import getListTrainings from '../../drizzle/trainings/list';
 import { NewTraining } from '../../../db/schema';
 import createTraining from '../../drizzle/trainings/create';
+import { Env } from '../../../index';
 
-export type Env = {
-	DATABASE_URL: string;
-	CLOUDINARY_API_KEY: string;
-	CLOUDINARY_API_SECRET: string;
-	CLOUDINARY_CLOUD_NAME: string;
-	CLOUDINARY_FOLDER_NAME: string;
-};
 
 const trainingApp = new Hono<{ Bindings: Env }>();
 

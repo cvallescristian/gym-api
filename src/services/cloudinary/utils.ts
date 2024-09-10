@@ -5,13 +5,20 @@ export type UploadImageResponse = {
 	secure_url: string;
 }
 
-export const saveImage = async (file: File, env: Env) => {
+interface Props {
+	file: File; 
+	env: Env;
+	folder: string;
+}
+
+export const saveImage = async (props: Props) => {
+	const {file, env, folder} = props;	
 	const env_variables = getCloudinaryVariables(env);
 	const formData = new FormData();
 	formData.append('upload_preset', 'exercise');
 	formData.append('api_key', env_variables.api_key);
 	formData.append('file', file);
-	formData.append('folder', `${env_variables.folder_name}/exercises`);
+	formData.append('folder', `${env_variables.folder_name}/${folder}`);
 
 	const requestOptions = {
 		method: 'POST',

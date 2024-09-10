@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { saveImage } from './services/cloudinary/utils';
 import exerciseApp from './services/api/exercises/exercises.api';
 import trainingApp from './services/api/trainings/trainings.api';
+import muscleApp from './services/api/muscles/muscles.api';
 import { cors } from 'hono/cors';
 
 export type Env = {
@@ -12,16 +13,16 @@ export type Env = {
 	CLOUDINARY_FOLDER_NAME: string;
 };
 
+// Init App
 const api = new Hono<{ Bindings: Env }>();
 
 // Cors
-const app = new Hono();
-
 api.use('/api/*', cors())
 
 // Routes
 api.route('/api/exercises', exerciseApp);
 api.route('/api/trainings', trainingApp);
+api.route('/api/muscles', muscleApp);
 
 // General routes
 api.get('/', async (c) => {
@@ -37,7 +38,8 @@ api.post('/upload', async (c) => {
 	}
 
 	// Save image action
-	const savedFilePath = await saveImage(file, c.env);
+	const folderName = 'file_upload';
+	const savedFilePath = await saveImage({file, env: c.env, folder: folderName});
 
 	return c.json({ message: 'Image Uploaded Successfully', path: savedFilePath });
 });

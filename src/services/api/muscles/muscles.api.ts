@@ -4,13 +4,16 @@ import { Env } from '../../../index';
 import { NewMuscle } from '../../../db/schema';
 import getListMuscles from '../../drizzle/muscles/list';
 import createMuscle from '../../drizzle/muscles/create';
+import { getMuscles } from '../../muscleWiki/muscles';
 
 
 const muscleApp = new Hono<{ Bindings: Env }>();
 
 muscleApp.get('/', async (c) => {
-	const listMuscles = await getListMuscles(c.env);
-	return c.json(listMuscles);
+	// const listMuscles = await getListMuscles(c.env);
+	const muscleWikiMuscles = await getMuscles();
+	
+	return c.json(muscleWikiMuscles);
 });
 
 muscleApp.post('/create', async (c) => {

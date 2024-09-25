@@ -4,12 +4,19 @@ import getListExercises from '../../../services/drizzle/exercises/list';
 import { NewExercise } from '../../../db/schema';
 import createExercise from '../../../services/drizzle/exercises/create';
 import { Env } from '../../../index';
+import { getExercises } from '../../muscleWiki/exercises';
 
 const exerciseApp = new Hono<{ Bindings: Env }>();
 
 exerciseApp.get('/', async (c) => {
-	const listExercises = await getListExercises(c.env);
-	return c.json(listExercises);
+	const muscleId = c.req.query('muscle_id');
+	const exerciseFilter = muscleId ? {muscle_id: parseInt(muscleId)} : undefined;
+	console.log({exerciseFilter})
+
+	// const listExercises = await getListExercises(c.env);
+	const muscleWikiExercises = await getExercises(exerciseFilter);
+
+	return c.json(muscleWikiExercises);
 });
 
 exerciseApp.post('/create', async (c) => {

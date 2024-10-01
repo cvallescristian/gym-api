@@ -1,19 +1,30 @@
 import { Hono } from 'hono';
 import { Env } from '../../../index';
-import { getExercises } from '../../muscleWiki/exercises';
 import integration from '../../drizzle/exercises/integration';
+import getListExercises, { ExerciseFilter } from '../../drizzle/exercises/list';
+import { Context } from 'hono/jsx';
 
 const exerciseApp = new Hono<{ Bindings: Env }>();
 
+const getFilters = (c: any) => {
+	const muscleId = c.req.query('muscle_id');
+	const name = c.req.query('name');
+
+	let filter: ExerciseFilter = {};
+	if (muscleId) filter['muscleId'] = parseInt(muscleId);
+	if (name) filter['name'] = name;
+
+	return filter;
+};
+
 exerciseApp.get('/', async (c) => {
 	const muscleId = c.req.query('muscle_id');
-	const exerciseFilter = muscleId ? {muscle_id: parseInt(muscleId)} : undefined;
-	console.log({exerciseFilter})
+	const filters = getFilters(c);
+	// const muscleWikiExercises = await getExercises(exerciseFilter);
+	console.log({ filters });
+	const exercises = await getListExercises(c.env, filters);
 
-	// const listExercises = await getListExercises(c.env);
-	const muscleWikiExercises = await getExercises(exerciseFilter);
-
-	return c.json(muscleWikiExercises);
+	return c.json(exercises);
 });
 
 exerciseApp.post('/integration', async (c) => {

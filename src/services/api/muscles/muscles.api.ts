@@ -1,10 +1,6 @@
 import { Hono } from 'hono';
-import { saveImage } from '../../../services/cloudinary/utils';
 import { Env } from '../../../index';
-import { NewMuscle } from '../../../db/schema';
 import getListMuscles from '../../drizzle/muscles/list';
-import createMuscle from '../../drizzle/muscles/create';
-import { getMuscles } from '../../muscleWiki/muscles';
 import integration from '../../drizzle/muscles/integration';
 
 

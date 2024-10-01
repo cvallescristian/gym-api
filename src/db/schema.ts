@@ -19,7 +19,7 @@ export const exercises = pgTable('exercises', {
 	description: text('description'),
 	image: text('image'),
 	video: text('video'), 
-	long_video: text('long_video'),
+	longVideo: text('long_video'),
 	wikiId: integer('wiki_id'),
 	seoTags: text('seo_tags').array(),
 	steps: jsonb('steps'),

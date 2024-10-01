@@ -1,7 +1,7 @@
 import postgres from 'postgres';
 import { Env } from '../../..';
 import { drizzle, PostgresJsDatabase } from 'drizzle-orm/postgres-js';
-import { Muscle, muscles, NewMuscle } from '../../../db/schema';
+import { muscles, NewMuscle } from '../../../db/schema';
 import { getMuscles } from '../../muscleWiki/muscles';
 import { eq } from 'drizzle-orm';
 

@@ -1,5 +1,6 @@
 interface ExerciseResponse {
 	results: Array<any>;
+	next: string;
 }
 
 interface ExerciseFilter {
@@ -10,16 +11,25 @@ export const getExercises = async (filter?: ExerciseFilter) => {
 		method: 'GET',
 	};
 
-	const params = filter?.muscle_id ? `?muscles=${filter.muscle_id}&limit=10` : '?limit=10';
-	const url = `https://musclewiki.com/newapi/exercise/exercises/${params}`;
-
-	console.log({ url });
-
 	try {
-		const response = await fetch(url, requestOptions);
-		const responseJSON = (await response.json()) as ExerciseResponse;
+		let exerciseList: Array<any> = [];
+		let moreExercises = true;
+		let url = `https://musclewiki.com/newapi/exercise/exercises/`;
+		let response;
+		while (moreExercises) {
+			response = await fetch(url, requestOptions);
+			const responseJSON = (await response.json()) as ExerciseResponse;
+			exerciseList = [...exerciseList, ...responseJSON.results];
+			console.log(responseJSON.next);
+			if (responseJSON.next) {
+				url = responseJSON.next;
+			}else {
+				moreExercises = false;
+			}
+		}
+		console.log(`Founded ${exerciseList.length} exercises`);
 
-		return responseJSON.results;
+		return exerciseList;
  	} catch (error) {
 		console.error(error);
 		return [];
